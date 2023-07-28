@@ -1,0 +1,29 @@
+export const foodTest = [{
+    name:'apple',
+    type:'food',
+    subType:'food',
+    calories:100,
+    nutrient:[],
+    description:''
+},{
+    name:'apple',
+    type:'food',
+    subType:'food',
+    calories:100,
+    nutrient:[],
+    description:''
+},{
+    name:'apple',
+    type:'food',
+    subType:'food',
+    calories:100,
+    nutrient:[],
+    description:''
+},{
+    name:'apple',
+    type:'food',
+    subType:'food',
+    calories:100,
+    nutrient:[],
+    description:''
+}]
