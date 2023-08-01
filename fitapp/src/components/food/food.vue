@@ -1,38 +1,82 @@
 <template>
-  <div>
-    <div class="block">
-      <span class="demonstration">Date picker</span>
-      <el-date-picker
-        v-model="value2"
-        type="date"
-        placeholder="Pick a day"
-        :disabled-date="disabledDate"
-        :shortcuts="shortcuts"
-        :size="size"
+  <div class="flex flex-row">
+    <div>
+      <div class="block z-0">
+        <span class="demonstration ">Date picker</span>
+        <el-date-picker
+          v-model="value2"
+          type="date"
+          placeholder="Pick a day"
+          :disabled-date="disabledDate"
+          :shortcuts="shortcuts"
+          :size="size"
+        />
+      </div>
+      <div class="flex flex-col">
+        <Table 
+          v-for="(item,name,index) in meals"
+          :key="index"
+          :mealName="item"
+          tableType="meal"
+          pageType="food"
+          :currentTime="value2"
+        />
+      </div>
+      <textarea
+        v-model="foodTextdetails"
+        class="bg-gray-300 h-24 w-72"
       />
+      <el-button
+        round
+        @click="savefile"
+      >
+        Save
+      </el-button>
     </div>
 
 
-    <Table />
+    <div class="sidebar z-50 fixed float-right bg-gray-300">
+      <SideBar page-type="food" />
+    </div>
   </div>
 </template>
 
 <script>
+import {reactive, ref} from 'vue'
+import SideBar from '../utils/sideBar.vue'
 import Table from '../utils/table.vue'
+//import {meal} from '../../data/mockMeal.json'
+import * as moment from 'moment'
+
 export default {
-    components:{Table},
+    components:{Table,SideBar},
     setup(){
-
-},
-data(){
-  return{
-
+      const foodTextdetails = ref(localStorage.getItem('foodText'))
+      //const existData = localStorage.getItem('recordData')
+    //const data =existData?meal.concat(JSON.parse(existData)):meal,
+    const meals = reactive(["breakfast","lunch","snack"]),
+        //mealData = reactive({}),
+        value2=ref(moment(new Date()).format('YYYY-MM-DD'))
+        // for(let i of data){
+        //     if(mealData[i.type]) mealData[i.type].push(i)
+        //     else mealData[i.type] = [i]
+        // }
+        return {meals,foodTextdetails,value2}
+},mounted(){
+  if(!this.value2){
+    this.value2 = moment(new Date()).format('YYYY-MM-DD')
   }
 },
   methods:{
-      handleSelect(key, keyPath){
-      this.index = key
+savefile(){
+  localStorage.setItem('foodText',this.foodTextdetails)
   }
   }
   }
 </script>
+
+<style scoped>
+.sidebar {
+  right: 0%;
+}
+</style>
