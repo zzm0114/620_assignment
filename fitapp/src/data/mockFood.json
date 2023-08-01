@@ -1,0 +1,52 @@
+{"itemsRaw" : [{
+    "name":"apple",
+    "type":"food",
+    "subType":"food",
+    "calories":100,
+    "nutrient":[],
+    "description":"",
+    "src":"https://www.collinsdictionary.com/images/thumb/apple_158989157_250.jpg?version=4.0.320",
+    "manual":false
+},{
+   "name":"peach",
+   "type":"food",
+    "subType":"food",
+    "calories":100,
+    "nutrient":[],
+    "description":"",
+    "src":"https://www.collinsdictionary.com/images/thumb/peach_118371985_250.jpg?version=4.0.320"
+},{
+    "name":"egg",
+    "type":"food",
+    "subType":"food",
+    "calories":100,
+    "nutrient":[],
+    "description":"",
+    "src":"https://www.collinsdictionary.com/images/thumb/egg_110803370_250.jpg?version=4.0.320"
+},{
+    "name":"milk",
+    "type":"food",
+    "subType":"food",
+    "calories":100,
+    "nutrient":[],
+    "description":"",
+    "src":"https://www.collinsdictionary.com/images/thumb/milk_117078826_250.jpg?version=4.0.320"
+},{
+    "name":"steak",
+    "type":"food",
+    "subType":"food",
+    "calories":100,
+    "nutrient":[],
+    "description":"",
+    "src":"https://www.collinsdictionary.com/images/thumb/steak_141783133_250.jpg?version=4.0.320",
+    "manual":true
+},{
+    "name":"basketball",
+    "type":"exercise",
+    "subType":"exercise",
+    "calories":100,
+    "nutrient":[],
+    "description":"",
+    "src":"https://www.collinsdictionary.com/images/thumb/basketball_199288139_250.jpg?version=4.0.320",
+    "manual":true
+}]}

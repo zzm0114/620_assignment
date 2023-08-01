@@ -1,6 +1,8 @@
 <template>
-  <div class="bg-black">
-    <h1>Fitapp</h1>
+  <div>
+    <h1 class=" text-sky-300 m-4">
+      Fitapp
+    </h1>
         
     <el-menu
       :default-active="activeIndex"
@@ -42,6 +44,15 @@
     <div v-if="index == '4'">
       <report />
     </div>
+    <div v-if="index == '2'||index == '3'">
+      <el-button
+        round
+        class="float-right"
+        @click="index = '4'"
+      >
+        View Report
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -54,16 +65,18 @@ import { ref } from 'vue'
 export default {
     components:{exerise,food,report},
     setup(){
-    const activeIndex = ref('1')
+      localStorage.removeItem('sideData')
+      localStorage.removeItem('weightData')
+    const activeIndex = ref('2')
     return {activeIndex}
 },
 data(){
   return{
-    index : "0"
+    index : "2"
   }
 },
   methods:{
-      handleSelect(key, keyPath){
+      handleSelect(key){
       this.index = key
   }
   }

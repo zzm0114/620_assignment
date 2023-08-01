@@ -1,0 +1,19 @@
+{ 
+    "exercise":[
+        
+ {
+    "name":"test",
+    "type":"morning",
+    "calories":100,
+
+    "time":"2023-07-30"
+}, {
+    "name":"test2",
+    "type":"evening",
+    "calories":100,
+
+    "time":"2023-07-30"
+}
+
+]
+}
