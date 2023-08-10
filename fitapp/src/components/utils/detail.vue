@@ -8,6 +8,7 @@
         :AddType="AddType"
         :item-data="item"
         @addItemNew="addItemNew"
+        :currentTime="currentTime"
       />
     </div>
     <div class="flex flex-row">
@@ -18,6 +19,7 @@
         :AddType="AddType"
         :item-data="item"
         @addItemNew="addItemNew"
+        :currentTime="currentTime"
       />
     </div>
     <div>
@@ -46,7 +48,10 @@ props:{
         },AddType:{
     type:String,
     default:'N/A'
-  }
+  },currentTime:{
+          type:String,
+          default:'1990-01-01'
+        }
     },
   setup() {
     const total = ref(0),currentPage= ref(1)

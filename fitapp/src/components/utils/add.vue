@@ -2,11 +2,14 @@
   <div>
     <div>
       <h1>Add item</h1>
-      <el-button round
-        @click="search">Search</el-button><input class="border-black border-2" v-model="searchKey">
+      <input class="border-black border-2" v-model="searchKey"><el-button round
+        @click="search">Search</el-button>
+   <el-button round
+        @click="reset">Reset</el-button>
+   
     </div>
 
-    <div>
+    <div :key="a">
       <div v-if="tableType == 'meal'">
         <el-menu
           :default-active="activeIndex"
@@ -66,6 +69,7 @@
           class="w-full"
           :item-data-all="food"
           @addItemNew="addItemNew"
+          :currentTime="currentTime"
         />
       </div>
       <div v-if="index == '2' && tableType == 'meal'">
@@ -74,6 +78,7 @@
           class="w-full"
           :item-data-all="recipe"
           @addItemNew="addItemNew"
+          :currentTime="currentTime"
         />
       </div>
       <div v-if="index == '3' && tableType == 'meal'">
@@ -82,6 +87,7 @@
           class="w-full"
           :item-data-all="meal"
           @addItemNew="addItemNew"
+          :currentTime="currentTime"
         />
       </div>
       <div v-if="index == '4' && tableType == 'meal'">
@@ -90,6 +96,7 @@
           class="w-full"
           :item-data-all="previous"
           @addItemNew="addItemNew"
+          :currentTime="currentTime"
         />
       </div>
 
@@ -99,6 +106,7 @@
           class="w-full"
           :item-data-all="exercise"
           @addItemNew="addItemNew"
+          :currentTime="currentTime"
         />
       </div>
       <div v-if="index == '2' && tableType != 'meal'">
@@ -107,6 +115,7 @@
           class="w-full"
           :item-data-all="set"
           @addItemNew="addItemNew"
+          :currentTime="currentTime"
         />
       </div>
       <div v-if="index == '3' && tableType != 'meal'">
@@ -115,6 +124,7 @@
           class="w-full"
           :item-data-all="exercisePrevious"
           @addItemNew="addItemNew"
+          :currentTime="currentTime"
         />
       </div>
     </div>
@@ -134,6 +144,9 @@ export default {
   },tableType:{
             type:String,
             default:'N/A'
+        },currentTime:{
+          type:String,
+          default:'1990-01-01'
         }
 },
     setup() {
@@ -147,11 +160,11 @@ export default {
         ,exercise =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="exercise"))
         ,set =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="set"))
         ,exercisePrevious =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="previous"))
-
+,a = ref(0)
         const activeIndex = ref('1')
 
         
-        return {searchKey,items,food,activeIndex,recipe,meal,previous,exercise,set,exercisePrevious}
+        return {a,searchKey,items,food,activeIndex,recipe,meal,previous,exercise,set,exercisePrevious}
     },  data(){
   return{
     index : "1"
@@ -164,8 +177,12 @@ methods:{
     },
       handleSelect(key){
       this.index = key
-  },search(){
-        this.items = this.items.filter((data)=>data.name.includes(this.searchKey))
+    },
+  search(){
+ const rawData = localStorage.getItem('popData'),
+    
+         items = rawData?itemsRaw.concat(JSON.parse(rawData)):itemsRaw
+        this.items = items.filter((data)=>JSON.stringify(data).includes(this.searchKey))
         ,this.food =  this.items.filter((i)=>i.type=='food'&&i.subType=="food")
         ,this.recipe =  this.items.filter((i)=>i.type=='food'&&i.subType=="recipe")
         ,this.meal =  this.items.filter((i)=>i.type=='food'&&i.subType=="meal")
@@ -173,6 +190,50 @@ methods:{
         ,this.exercise =  this.items.filter((i)=>i.type=='exercise'&&i.subType=="exercise")
         ,this.set =  this.items.filter((i)=>i.type=='exercise'&&i.subType=="set")
         ,this.exercisePrevious =  this.items.filter((i)=>i.type=='exercise'&&i.subType=="previous")
+  this.a +=1
+      //  const rawData = localStorage.getItem('popData')
+      //  console.log(JSON.parse(rawData).filter(e => JSON.stringify(e).includes(this.searchKey)))
+      //   let items = reactive(rawData?itemsRaw.concat(JSON.parse(rawData).filter(e => JSON.stringify(e).includes(this.searchKey)) ):itemsRaw)
+      //   let food =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="food"))
+      //   ,recipe =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="recipe"))
+      //   ,meal =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="meal"))
+      //   ,previous =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="previous"))
+      //   ,exercise =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="exercise"))
+      //   ,set =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="set"))
+      //   ,exercisePrevious =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="previous"))
+      //   console.log(items);
+      //   this.items = items
+      //   this.food = food
+
+  
+  },  reset(){
+ const rawData = localStorage.getItem('popData'),
+    
+         items = rawData?itemsRaw.concat(JSON.parse(rawData)):itemsRaw
+        this.items = items.filter((data)=>data.name.includes(''))
+        ,this.food =  this.items.filter((i)=>i.type=='food'&&i.subType=="food")
+        ,this.recipe =  this.items.filter((i)=>i.type=='food'&&i.subType=="recipe")
+        ,this.meal =  this.items.filter((i)=>i.type=='food'&&i.subType=="meal")
+        ,this.previous =  this.items.filter((i)=>i.type=='food'&&i.subType=="previous")
+        ,this.exercise =  this.items.filter((i)=>i.type=='exercise'&&i.subType=="exercise")
+        ,this.set =  this.items.filter((i)=>i.type=='exercise'&&i.subType=="set")
+        ,this.exercisePrevious =  this.items.filter((i)=>i.type=='exercise'&&i.subType=="previous")
+  this.a +=1
+      //  const rawData = localStorage.getItem('popData')
+      //  console.log(JSON.parse(rawData).filter(e => JSON.stringify(e).includes(this.searchKey)))
+      //   let items = reactive(rawData?itemsRaw.concat(JSON.parse(rawData).filter(e => JSON.stringify(e).includes(this.searchKey)) ):itemsRaw)
+      //   let food =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="food"))
+      //   ,recipe =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="recipe"))
+      //   ,meal =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="meal"))
+      //   ,previous =  reactive(items.filter((i)=>i.type=='food'&&i.subType=="previous"))
+      //   ,exercise =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="exercise"))
+      //   ,set =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="set"))
+      //   ,exercisePrevious =  reactive(items.filter((i)=>i.type=='exercise'&&i.subType=="previous"))
+      //   console.log(items);
+      //   this.items = items
+      //   this.food = food
+
+  
   }
   }
 }

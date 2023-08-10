@@ -1,9 +1,8 @@
 <template>
   <div class="border-2 border-black">
     <div class="flex flex-row">
-      <div>
+      <div class="flex items-center justify-center overflow-hidden w-full h-full" style="max-width: 200px; max-height: 200px;">
         <img
-          style="width:100%"
           :src="itemData.src"
         >
       </div>
@@ -36,6 +35,7 @@
 </template>
 <script>
 import { reactive,ref } from 'vue'
+import * as moment from 'moment'
 export default {
     name:'Card',props:{
         itemData:{
@@ -44,7 +44,10 @@ export default {
         },AddType:{
     type:String,
     default:'N/A'
-  }
+  },currentTime:{
+          type:String,
+          default:'1990-01-01'
+        }
     },
     setup() {
         const data =reactive([]),amount = ref(0)
@@ -55,6 +58,7 @@ export default {
     
     methods:{
         addFood(){
+          if(this.amount && this.amount>0){
             const dic={}
             for(let i of this.itemData.data){
                 dic[i.name] = i.value
@@ -67,13 +71,13 @@ export default {
         fat:dic['fat']?Number(dic['fat'])*this.amount:0,
     protein:dic['protein']?Number(dic['protein'])*this.amount:0,
     sodium:dic['sodium']?Number(dic['sodium'])*this.amount:0,
-    sugar:dic['sugar']?Number(dic['sugar'])*this.amount:0,"time":"2023-07-30"
+    sugar:dic['sugar']?Number(dic['sugar'])*this.amount:0,"time":this.currentTime?moment(this.currentTime).format('YYYY-MM-DD'): moment(new Date()).format('YYYY-MM-DD')
         }
         if(existData){
             exist.push(newData)
             localStorage.setItem('recordData',JSON.stringify(exist))
         } else localStorage.setItem('recordData',JSON.stringify([newData]))
-        this.$emit('addItemNew')
+        this.$emit('addItemNew')}
         }
     }
 }

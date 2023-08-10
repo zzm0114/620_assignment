@@ -29,9 +29,8 @@
 <script>
 import {meal} from '../../data/mockMeal.json'
 import {exercise} from '../../data/mockExercise.json'
-import { reactive } from 'vue'
 import { Line } from '@antv/g2plot';
-
+import {reactive, ref} from 'vue'
 export default {
   
     setup(){
