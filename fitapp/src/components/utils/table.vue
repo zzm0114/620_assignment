@@ -47,6 +47,8 @@
         <Add
           :table-type="tableType"
           :AddType="mealName"
+          :currentTime="currentTime"
+          @addItemNew="addItemNew"
         />
         <el-button
           round
@@ -108,6 +110,27 @@ export default {
           type:String,
           default:'1990-01-01'
         }
+    },watch:{
+    //   currentTime(newi,oldi){
+ 
+    //      for(let i of this.rawData){
+    //         if(i.type == this.mealName && i.time.substring(0,10) == this.currentTime.substring(0,10))this.tableData.push(i) 
+    //     }
+    //     this.lists = this.tableType == 'meal'?["name","calories","fat","protein","sodium","sugar","time"]:["name","calories","time"]
+    //         if(this.pageType=='food' && this.tableData && this.tableData.length){
+    //           const lists = ["calories","fat","protein","sodium","sugar"]
+    //           for(let i of lists)this.chartData.push({'type':i,'value':0})
+    //          this.tableData.map((data)=>{
+    //             for(let j=0;j<lists.length;j++){
+    //               if(data[lists[j]]) this.chartData[j].value += Number(data[lists[j]]) 
+    //             }
+    //           })
+    //           this.containerId = `contain${this.mealName}` 
+    // document.getElementById(this.mealName).innerHTML=""
+    // this.draw();}else if(this.pageType=='exercise'){
+
+    // }
+    //   }
     },
     setup(){
       const lists = reactive(["name","calories","time"]),chartData = reactive([]),containerId = ref(`container`)
@@ -130,13 +153,10 @@ export default {
          for(let i of this.rawData){
           //console.log(i.type,this.mealName)
           //this.tableDataType.push(i) 
-            if(i.type == this.mealName)this.tableData.push(i) 
+            if(i.type == this.mealName && i.time.substring(0,10) == this.currentTime.substring(0,10))this.tableData.push(i) 
         }
         //console.log('a',tableDataType)
         //this.tableData = tableDataType
-
-
-
         this.lists = this.tableType == 'meal'?["name","calories","fat","protein","sodium","sugar","time"]:["name","calories","time"]
             if(this.pageType=='food' && this.tableData && this.tableData.length){
               const lists = ["calories","fat","protein","sodium","sugar"]
@@ -152,16 +172,12 @@ export default {
          //document.getElementById('container1').innerHTML=""
 //this.draw2();
     }
-
-    if(this.tableData){const tableDataInUse = this.tableData.filter(data=>data.time && data.time.substring(0,10) == this.currentTime.substring(0,10))
-      console.log(this.tableData,tableDataInUse,this.currentTime,this.currentTime.substring(0,10))}
-      
-      
-
+    // if(this.tableData){const tableDataInUse = this.tableData.filter(data=>data.time && data.time.substring(0,10) == this.currentTime.substring(0,10))
+    //   console.log(this.tableData,tableDataInUse,this.currentTime,this.currentTime.substring(0,10))}
 
     },methods:{
       addItemNew(){
-        console.log('active')
+        //console.log('active')
                const mockData = exercise.concat(meal),
         existData = localStorage.getItem('recordData'),
          rawData =existData?mockData.concat(JSON.parse(existData)):mockData
@@ -171,6 +187,7 @@ export default {
           //this.tableDataType.push(i) 
             if(i.type == this.mealName)this.tableData.push(i) 
         }
+        this.open = false
       },
       draw(){
         const piePlot = new Pie(this.mealName, {

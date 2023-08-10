@@ -44,6 +44,8 @@ import SideBar from '../utils/sideBar.vue'
 import Table from '../utils/table.vue'
 //import {exercise} from '../../data/mockExercise.json'
 import {reactive, ref} from 'vue'
+import * as moment from 'moment'
+
 export default {
     components:{Table,SideBar},
     setup(){
